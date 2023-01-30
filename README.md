@@ -32,16 +32,21 @@ are an underappreciated genre, and I am excited to
 contribute to its resurgence in popularity.
 
 ## User Stories
-- As a user, XXX
-- As a user, XXX
-- As a user, XXX
-- As a user, XXX
-- As a user, XXX
-- As a user, XXX
-- As a user, XXX
-- As a user, XXX
-- As a user, XXX
-- As a user, XXX
-- As a user, XXX
-- As a user, XXX
-- As a user, XXX
+- As a user, I want to be able to add wood to my inventory
+- As a user, I want to be able to remove wood from my inventory
+- As a user, I want to be able to craft recipes from my inventory items
+- As a user, I want to be able to kill enemies
+- As a user, I want to be able to damage enemies
+- As a user, I want to be able to drink potions
+- As a user, I want to be able to view a list of my current items in inventory
+- As a user, I want to be able to view the required items for crafting a recipe
+- As a user, I want to be able to view a map of the world
+- As a user, I want to be able to edit my inventory size
+- As a user, I want to be able to save my current progress
+- As a user, I want to be able to load a random seed in every new game
+- As a user, I want to be able to delete a saved game version
+- As a user, I want to be able to interact with entities (NPCs) via given options
+- As a user, I want to be able to interact with miscellaneous items in my inventory
+- As a user, I want to be able to change the display mode of the game (light mode/dark mode)
+- As a user, I want to be able to restart my game on the same seed
+- As a user, I want to be able to change the sound option (mute/sound on)
