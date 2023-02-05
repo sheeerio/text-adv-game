@@ -4,4 +4,6 @@ public interface Item {
     public void requiredItems();
 
     public void use();
+
+    public String getName();
 }

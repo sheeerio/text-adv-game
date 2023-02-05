@@ -2,6 +2,11 @@ package ui;
 
 import model.Mob;
 import model.Player;
+import model.items.Item;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,9 +29,11 @@ public class Game {
     static Mob skeleton = new Mob("Skeleton", 20, 4.0, 0.3);
     static Mob zombie = new Mob("Zombie", 20, 3.0, 0.23);
 
+    @SuppressWarnings("checkstyle:MethodLength")
     public static void main(String[] args) {
         ArrayList<Mob> neutralMobList = new ArrayList<>(Arrays.asList(spider, wolf, enderman, ironGolem));
         ArrayList<Mob> hostileMobList = new ArrayList<>(Arrays.asList(blaze, chickenJockey, creeper, skeleton, zombie));
+        ArrayList<Item> inventory = new ArrayList<>();
 
         Scanner in  = new Scanner(System.in);
         Random rand = new Random();
@@ -39,13 +46,29 @@ public class Game {
         String username = in.nextLine();
 
         Player player = new Player(username, 1, 20, false);
-        System.out.println("Welcome to the world, " + username);
+        System.out.println("Welcome to the world, " + username + "\n\n\n\n\n");
 
         boolean running = true;
 
-        GAME:
+        Timer timer = new Timer();
         while (running) {
-            System.out.println("-----------------------------------------------------------------");
+            System.out.println("Press 1 to chop wood.");
+            String chop = in.nextLine();
+
+            if (chop == "1") {
+                Random lund = new Random();
+                int num = lund.nextInt(5);
+                for (int i = 0; i < num; i++) {
+                    inventory.add(wood);
+                }
+            }
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    System.out.println("");
+                }
+            },  4500);
         }
     }
 }
