@@ -6,7 +6,7 @@ public class Player {
 
     private static Integer attack;
     private static Integer health;
-    private static Item currentItem;
+    private static Item currentItem = null;
     private static boolean isRunning;
     private static String username;
 
