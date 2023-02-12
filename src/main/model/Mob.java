@@ -8,14 +8,15 @@ public class Mob {
 
     private String name;
     private Integer hp;
-    private Double baseAttack;
+    private Integer baseAttack;
     private Double speed;
     Random random = new Random();
 
-    public Mob(String name, Integer hp, Double att, Double speed) {
+    public Mob(String name, Integer hp, Integer att, Double speed) {
         this.name = name;
         this.hp = hp;
         this.baseAttack = att;
+        this.baseAttack += random.nextInt(this.baseAttack) + baseAttack;
         this.speed = speed;
     }
 
@@ -24,11 +25,21 @@ public class Mob {
     }
 
     public void hitPlayer() {
-        this.baseAttack *= random.nextDouble();
     }
 
     public String getName() {
         return name;
     }
 
+    public Integer getHp() {
+        return hp;
+    }
+
+    public Integer getBaseAttack() {
+        return baseAttack;
+    }
+
+    public Double getSpeed() {
+        return speed;
+    }
 }

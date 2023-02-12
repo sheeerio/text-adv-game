@@ -10,9 +10,9 @@ import javax.swing.JPanel;
 
 public final class Map {
 
-    private static final int DEFAULT_HEIGHT = 20;
+    private static final int DEFAULT_HEIGHT = 25;
 
-    private static final int DEFAULT_WIDTH = 20;
+    private static final int DEFAULT_WIDTH = 25;
 
     public static void main(String[] args) {
         int height = DEFAULT_HEIGHT;
@@ -30,21 +30,21 @@ public final class Map {
         JFrame window = new JFrame();
         window.setSize(width * 10, height * 10);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.getContentPane().add(new mapp(height, width, z));
+        window.getContentPane().add(new Mapper(height, width, z));
         window.setVisible(true);
         window.setTitle("Seed: " + seed);
     }
 
-    public static class mapp extends JPanel {
+    public static class Mapper extends JPanel {
         private int height;
         private int width;
 
-        private double zAxis;
+        private double zaxis;
 
-        public mapp(int height, int width, double zAxis) {
+        public Mapper(int height, int width, double zaxis) {
             this.height = height;
             this.width = width;
-            this.zAxis = zAxis;
+            this.zaxis = zaxis;
         }
 
         @Override
@@ -53,15 +53,17 @@ public final class Map {
                 for (int j = 0; j < height; ++j) { // x
                     double x = (double) j / ((double) width);
                     double y = (double) i / ((double) height);
-                    double n = noise(10 * x, 10 * y, zAxis);
+                    double n = noise(10 * x, 10 * y, zaxis);
 
                     // Watter (or a Lakes)
-                    if (n < 0.35) {
+                    if (n < 0.42) {
                         g.setColor(Color.CYAN);
-                    } else if (n >= 0.35 && n < 0.7) { // Floors (or Planes)
+                    } else if (n >= 0.42 && n < 0.69) { // Floors (or Planes)
                         g.setColor(Color.GREEN);
-                    } else if (n >= 0.7 && n < 0.85) { // Walls (or Mountains)
-                        g.setColor(Color.GRAY);
+                    } else if (n >= 0.69 && n < 0.8) {
+                        g.setColor(Color.green);
+                    } else if (n >= 0.8 && n < 0.98) { // Walls (or Mountains)
+                        g.setColor(Color.gray);
                     } else { // Walls (or Mountains)
                         g.setColor(Color.white);
                     }

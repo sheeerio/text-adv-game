@@ -4,6 +4,13 @@ public class Food implements Item {
 
 
     private String name;
+    private int hpHealed;
+
+    public Food(String name, int hp) {
+        this.name = name;
+        this.hpHealed = hp;
+    }
+
     @Override
     public void requiredItems() {
 
@@ -17,5 +24,14 @@ public class Food implements Item {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public void getRecipe() {
+
+    }
+
+    public int getHpHealed() {
+        return hpHealed;
     }
 }

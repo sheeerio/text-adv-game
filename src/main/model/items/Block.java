@@ -2,12 +2,13 @@ package model.items;
 
 import java.util.ArrayList;
 
-public class Blocks implements Item {
+public class Block implements Item {
 
     private static String name;
     ArrayList<Item> requiredItems = new ArrayList<>();
 
-    public Blocks(String name, ArrayList<Item> reqs) {
+
+    public Block(String name, ArrayList<Item> reqs) {
         this.name = name;
         requiredItems = reqs;
     }
@@ -26,4 +27,10 @@ public class Blocks implements Item {
     public String getName() {
         return this.name;
     }
+
+    @Override
+    public void getRecipe() {
+
+    }
+
 }
