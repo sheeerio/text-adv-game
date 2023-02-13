@@ -4,23 +4,14 @@ import java.util.ArrayList;
 
 public class Block implements Item {
 
-    private static String name;
+    private String name;
     ArrayList<Item> requiredItems = new ArrayList<>();
 
-
+    // EFFECTS: creates a block with given name and list
+    // of required items
     public Block(String name, ArrayList<Item> reqs) {
         this.name = name;
         requiredItems = reqs;
-    }
-
-    @Override
-    public void requiredItems() {
-
-    }
-
-    @Override
-    public void use() {
-
     }
 
     @Override
@@ -28,9 +19,7 @@ public class Block implements Item {
         return this.name;
     }
 
-    @Override
-    public void getRecipe() {
-
+    public ArrayList<Item> getRequiredItems() {
+        return requiredItems;
     }
-
 }

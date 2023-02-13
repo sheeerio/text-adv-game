@@ -8,28 +8,27 @@ public class Weapon implements Item {
     private String infVerb;
     private Integer attack;
 
+    // EFFECTS: creates a Weapon with given name and class
     public Weapon(String name, String classs) {
         this.name = name;
-        this.classs = "hand";
+        this.classs = classs;
         this.verb = "punched";
         this.infVerb = "punch";
         this.attack = 12;
     }
 
-    @Override
-    public void requiredItems() {
-
-    }
-
-    @Override
+    // MODIFIES: this
+    // EFFECTS: sets the word to use when equipped by player
     public void use() {
-
         if (this.classs == "sword") {
             this.verb = "sliced";
             this.infVerb = "kill";
         } else if (this.classs == "axe") {
             this.verb = "chopped";
             this.infVerb = "chop";
+        } else {
+            this.verb = "punched";
+            this.infVerb = "punch";
         }
 
     }
@@ -39,10 +38,6 @@ public class Weapon implements Item {
         return this.name;
     }
 
-    @Override
-    public void getRecipe() {
-
-    }
 
     public String getClasss() {
         return classs;
@@ -58,7 +53,7 @@ public class Weapon implements Item {
 
     public Integer getAttack() {
         if (this.classs.equals("sword")) {
-            return 5;
+            return 20;
         } else {
             return 2;
         }

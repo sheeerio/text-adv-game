@@ -18,6 +18,7 @@ public class Inventory {
     Item sticks = new Misc("Sticks");
     Item woodenSword = new Weapon("Wooden Sword", "sword");
 
+    // EFFECTS: creates an empty inventory
     public Inventory() {
         currentItem = null;
         items = new LinkedList<>();
@@ -25,6 +26,11 @@ public class Inventory {
         numberOfItems = new ArrayList<>();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds the item to the inventory item and name list
+    // and appends 1 to the number list if item not already in inv.
+    // otherwise adds 1 to the number of the item.
+    // Sets current item to be last item added
     public void addItem(Item item) {
         String tempName = item.getName();
         if (items.contains(item)) {
@@ -39,6 +45,9 @@ public class Inventory {
     }
 
     // REQUIRES: item must be in the list
+    // MODIFIES: this
+    // EFFECTS: removes item from all inventory lists
+    // and sets current item to last item in itemNames list
     public void removeItemBunch(Item item) {
 
         int idx = items.indexOf(item);
@@ -49,6 +58,10 @@ public class Inventory {
     }
 
     // REQUIRES: item must be in the list
+    // MODIFIES: this
+    // EFFECTS: if number < item number, subtracts number
+    // from item number in item number list
+    // else removes item bunch from lists
     public void removeNItems(Item item, Integer number) {
         int idx = itemNames.indexOf(item.getName());
         boolean temp = false;
@@ -63,9 +76,15 @@ public class Inventory {
         }
     }
 
+    // EFFECTS: returns the number of that item if it exists
+    // else returns 0
     public Integer count(Item item) {
-        int i = new ArrayList<>(items).indexOf(item);
-        return numberOfItems.get(i);
+        if (items.contains(item)) {
+            int i = new ArrayList<>(items).indexOf(item);
+            return numberOfItems.get(i);
+        } else {
+            return 0;
+        }
     }
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
@@ -116,7 +135,11 @@ public class Inventory {
     }
 
     public void setCurrentItemDefault() {
-        currentItem = itemNames.get(itemNames.size() - 1);
+        if (!items.isEmpty()) {
+            currentItem = itemNames.get(itemNames.size() - 1);
+        } else {
+            currentItem = null;
+        }
     }
 
     public void printCurrentItem() {
@@ -179,4 +202,5 @@ public class Inventory {
     public LinkedList<Item> getItems() {
         return items;
     }
+
 }

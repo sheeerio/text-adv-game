@@ -45,7 +45,7 @@ public class Game {
         String difficulty = "normal";
 
         ArrayList<Mob> neutralMobList = new ArrayList<>(Arrays.asList(spider, wolf, enderman, ironGolem));
-        ArrayList<Mob> hostileMobList = new ArrayList<>(Arrays.asList(blaze, chickenJockey, creeper, skeleton, zombie));
+        ArrayList<Mob> hostileMobList = new ArrayList<>(Arrays.asList(spider, enderman, blaze, chickenJockey, creeper, skeleton, zombie));
 
         Inventory inventory = new Inventory();
 
@@ -212,14 +212,14 @@ public class Game {
                             System.out.println("\t> You have taken too much damage, you are too weak to go on!");
                         }
                     } else if (input.equals("2")) {
-                        if (inventory.getNumberOfItems().get(inventory.getItemNames().indexOf("Raw Meat")) > 0) {
+                        if (inventory.count(rawMeat) > 0) {
                             Player.setHealth(Player.getHealth() + 10);
                             inventory.removeNItems(rawMeat, 1);
                             if (inventory.getItemNames().contains("Raw Meat")) {
                                 System.out.println("\t> You eat raw meat, healing yourself for 10 HP."
                                         + "\n\t> You now have " + Player.getHealth() + " HP."
                                         + "\n\t> You have "
-                                        + inventory.getNumberOfItems().get(inventory.getItemNames().indexOf("Raw Meat"))
+                                        + inventory.count(rawMeat)
                                         + " raw meat.");
                             } else {
                                 System.out.println("You don't have enough meat... get fucked!");
@@ -268,6 +268,7 @@ public class Game {
 
                 if (input.equals("1")) {
                     System.out.println("You continue on...");
+                    System.out.println("pussy");
                 } else if (input.equals("2")) {
                     System.out.println("You exit the cave...");
                     break;
