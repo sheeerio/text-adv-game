@@ -130,10 +130,15 @@ public class Inventory {
         }
     }
 
+    // REQUIRES: index must be in range of itemNames.size()
+    // MODIFES: this
+    // EFFECTS: sets current item to item at index in list
     public void setCurrentItemTo(int idx) {
         currentItem = itemNames.get(idx);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets current item to item at last index in list
     public void setCurrentItemDefault() {
         if (!items.isEmpty()) {
             currentItem = itemNames.get(itemNames.size() - 1);

@@ -12,19 +12,13 @@ public class Mob {
     private Double speed;
     Random random = new Random();
 
+    // EFFECTS: creates a mob and initializes its name, health,
+    // base attack, and speed
     public Mob(String name, Integer hp, Integer att, Double speed) {
         this.name = name;
         this.hp = hp;
         this.baseAttack = att;
-        this.baseAttack += random.nextInt(this.baseAttack) + baseAttack;
         this.speed = speed;
-    }
-
-    public void getHitbyPlayer() {
-        this.hp -= Player.getAttack();
-    }
-
-    public void hitPlayer() {
     }
 
     public String getName() {
@@ -41,5 +35,9 @@ public class Mob {
 
     public Double getSpeed() {
         return speed;
+    }
+
+    public void setBaseAttack(Integer baseAttack) {
+        this.baseAttack += random.nextInt(this.baseAttack) + baseAttack;
     }
 }

@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
+import static model.Player.getAttack;
+
 
 public class Game {
     // Initialize day
@@ -40,7 +42,7 @@ public class Game {
     static Weapon woodenSword = new Weapon("Wooden Sword", "sword");
     static Food rawMeat  = new Food("Raw Meat", 5);
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings", "checkstyle:LineLength"})
     public static void main(String[] args) {
         String difficulty = "normal";
 
@@ -65,7 +67,7 @@ public class Game {
         System.out.println("Enter your username: ");
         String username = in.nextLine();
 
-        Player player = new Player(username, 1, 100, false);
+        Player player = new Player(username, 20, 100);
         System.out.println("Welcome to the world, " + username + "\n\n\n\n\n");
 
         Weapon weapon = new Weapon("hands", "hands");
@@ -199,7 +201,7 @@ public class Game {
 
                     String input = in.nextLine();
                     if (input.equals("1")) {
-                        int damageDealt = rand.nextInt(Player.getAttack()) + 10;
+                        int damageDealt = rand.nextInt(getAttack()) + 10;
                         int damageTaken = enemy.getBaseAttack();
 
                         enemyHealth -= damageDealt;
@@ -283,6 +285,7 @@ public class Game {
 
 
         }
+
 
     }
 

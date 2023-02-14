@@ -4,7 +4,6 @@ import model.items.*;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,6 +15,8 @@ class MyModelTest {
     Weapon woodenSword;
     Misc sticks;
     Inventory inv;
+    Mob spider;
+    Player p1;
 
     @BeforeEach
     public void setUp(){
@@ -25,6 +26,8 @@ class MyModelTest {
         woodenSword = new Weapon("Wooden Sword", "sword");
         sticks = new Misc("Sticks");
         inv = new Inventory();
+        spider = new Mob("Spider", 16, 2, .4);
+        p1 = new Player("p1", 20, 1);
     }
 
     @Test
@@ -122,4 +125,43 @@ class MyModelTest {
         assertEquals(inv.count(wood), 2);
     }
 
+    @Test
+    public void mobConstructorTest() {
+        assertEquals("Spider", spider.getName());
+        assertEquals(16, spider.getHp());
+        assertEquals(2, spider.getBaseAttack());
+        assertEquals(.4, spider.getSpeed());
+    }
+
+    @Test
+    public void playerConstructorTest() {
+        assertEquals("p1", p1.getUsername());
+        assertEquals(1, p1.getHealth());
+    }
+
+    @Test
+    public void setHealthTest() {
+        p1.setHealth(112);
+        assertEquals(112, p1.getHealth());
+    }
+
+    @Test
+    public void setCurrentItemToTest() {
+        inv.addItem(wood);
+        inv.addItem(sticks);
+        inv.addItem(rawMeat);
+        inv.setCurrentItemTo(2);
+        assertEquals(inv.getCurrentItem(), "Raw Meat");
+        inv.setCurrentItemTo(1);
+        assertEquals(inv.getCurrentItem(), "Sticks");
+    }
+
+    @Test
+    public void setCurrentItemDefaultTest() {
+        inv.addItem(wood);
+        inv.addItem(rawMeat);
+        inv.addItem(wood);
+        inv.setCurrentItemDefault();
+        assertEquals(inv.getCurrentItem(), "Raw Meat");
+    }
 }
