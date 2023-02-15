@@ -27,7 +27,7 @@ class MyModelTest {
         sticks = new Misc("Sticks");
         inv = new Inventory();
         spider = new Mob("Spider", 16, 2, .4);
-        p1 = new Player("p1", 20, 1);
+        p1 = new Player("p1", 1);
     }
 
     @Test

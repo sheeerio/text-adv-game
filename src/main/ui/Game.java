@@ -153,7 +153,7 @@ public class Game {
         String username = in.nextLine();
 
         System.out.println("Welcome to the world, " + username + "\n\n\n\n\n");
-        player = new Player(username, 20, 100);
+        player = new Player(username, 20);
 
         Weapon weapon = new Weapon("hands", "hands");
         boolean running = true;
@@ -286,7 +286,7 @@ public class Game {
 
                     String input = in.nextLine();
                     if (input.equals("1")) {
-                        int damageDealt = rand.nextInt(player.getAttack()) + 10;
+                        int damageDealt = rand.nextInt(20) + 10;
                         int damageTaken = enemy.getBaseAttack();
 
                         enemyHealth -= damageDealt;

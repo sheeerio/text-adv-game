@@ -3,15 +3,13 @@ package model;
 // Player class contains information about the Player statistics that will be used in the fight
 public class Player {
 
-    private static Integer attack;
     private static Integer health;
     private static String username;
 
     // EFFECTS: creates a player with given username
     // and initializes attack and health
-    public Player(String username, int att, int health) {
+    public Player(String username, int health) {
         this.username = username;
-        this.attack = att;
         this.health = health;
     }
 
@@ -25,9 +23,5 @@ public class Player {
 
     public static void setHealth(Integer health) {
         Player.health = health;
-    }
-
-    public static Integer getAttack() {
-        return attack;
     }
 }
