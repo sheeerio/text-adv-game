@@ -21,10 +21,8 @@ public class Weapon implements Item {
     // MODIFIES: this
     // EFFECTS: sets the word to use when equipped by player
     public void use() {
-        if (this.classs == "sword") {
-            this.verb = "sliced";
-            this.infVerb = "kill";
-        }
+        this.verb = "sliced";
+        this.infVerb = "kill";
     }
 
     @Override
