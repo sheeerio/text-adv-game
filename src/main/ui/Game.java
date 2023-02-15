@@ -5,17 +5,9 @@ import model.Mob;
 import model.Player;
 import model.items.Block;
 import model.items.Food;
-import model.items.Item;
 import model.items.Weapon;
 
-import java.sql.SQLOutput;
-import java.util.Timer;
-
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 import static model.Player.getAttack;
 
@@ -38,9 +30,9 @@ public class Game {
     static Mob zombie = new Mob("Zombie", 20, 3, 0.23);
 
     // Initialize blocks
-    static Block wood = new Block("Wood",null);
+    static Block wood = new Block("Wood", null);
     static Weapon woodenSword = new Weapon("Wooden Sword", "sword");
-    static Food rawMeat  = new Food("Raw Meat", 5);
+    static Food rawMeat = new Food("Raw Meat", 5);
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings", "checkstyle:LineLength"})
     public static void main(String[] args) {
@@ -50,7 +42,7 @@ public class Game {
 
         Inventory inventory = new Inventory();
 
-        Scanner in  = new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
         Random rand = new Random();
 
         // Game variables
@@ -82,7 +74,7 @@ public class Game {
             if (chop.equals("1")) {
                 oneY = true;
             } else {
-                System.out.println("bruh wtf");
+                System.out.println("You pressed the wrong button!");
                 break WOW;
             }
             while (oneY && !chop.equals("E")) {
@@ -277,7 +269,6 @@ public class Game {
             System.out.println("#  THANKS FOR PLAYING! #");
             System.out.println("########################");
             System.exit(0);
-
 
 
         }
