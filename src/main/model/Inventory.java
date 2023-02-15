@@ -11,12 +11,8 @@ public class Inventory {
     LinkedList<Item> items;
     ArrayList<String> itemNames;
     ArrayList<Integer> numberOfItems;
-    Scanner in = new Scanner(System.in);
 
     // Initialization of all blocks
-    Item woodenPlank = new Block("Wooden Planks", null);
-    Item sticks = new Misc("Sticks");
-    Item woodenSword = new Weapon("Wooden Sword", "sword");
 
     // EFFECTS: creates an empty inventory
     public Inventory() {
@@ -87,49 +83,6 @@ public class Inventory {
         }
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    public void printInventory() {
-        boolean running = true;
-
-        while (running) {
-            for (String i : itemNames) {
-                System.out.println(itemNames.indexOf(i) + 1 + ".  " + i + " ("
-                        + numberOfItems.get(itemNames.indexOf(i)) + ")");
-            }
-            printCurrentItem();
-            System.out.println("Press the item number to change current item.");
-            System.out.println("Press E to close the inventory");
-            Scanner in = new Scanner(System.in);
-            String numToChange = in.nextLine();
-            if (numToChange.equals("E")) {
-                break;
-            } else if (numToChange.equals("1") || numToChange.equals("2") || numToChange.equals("3")
-                    || numToChange.equals("4")) {
-                setCurrentItemTo(Integer.valueOf(numToChange) - 1);
-                System.out.println("Press R to throw away " + currentItem);
-                System.out.println("Press E to close your inventory.");
-                getRecipeOfCurrentItem();
-                String closeInv = in.nextLine();
-
-                if (closeInv.equals("E")) {
-                    System.out.println("" + " ");
-                    break;
-                } else if (closeInv.equals("R")) {
-                    removeItemBunch(items.get(itemNames.indexOf(currentItem)));
-                    printInventory();
-                    printCurrentItem();
-                } else {
-                    continue;
-                }
-            } else {
-                setCurrentItemTo(Integer.valueOf(numToChange) - 1);
-                printInventory();
-                System.out.println("\n\n");
-                printCurrentItem();
-            }
-        }
-    }
-
     // REQUIRES: index must be in range of itemNames.size()
     // MODIFES: this
     // EFFECTS: sets current item to item at index in list
@@ -147,50 +100,6 @@ public class Inventory {
         }
     }
 
-    public void printCurrentItem() {
-        System.out.println("Your current item is " + currentItem);
-        getRecipeOfCurrentItem();
-    }
-
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    public void getRecipeOfCurrentItem() {
-        if (currentItem == "Wood") {
-            System.out.println("Press B to create Wooden Planks (4)");
-            String next = in.nextLine();
-            if (next.equals("B")) {
-                for (int i = 0; i < 4; i++) {
-                    addItem(woodenPlank);
-                    setCurrentItemTo(items.indexOf(woodenPlank));
-                    printInventory();
-                }
-            }
-        } else if (currentItem == "Wooden Planks" && numberOfItems.get(itemNames.indexOf("Wooden Planks")) >= 2) {
-            System.out.println("Press B to create Sticks (2)");
-            String next = in.nextLine();
-            if (next.equals("B")) {
-                for (int i = 0; i < 2; i++) {
-                    addItem(sticks);
-                }
-                removeNItems(woodenPlank, 2);
-                setCurrentItemTo(items.indexOf(sticks));
-                printInventory();
-            }
-        } else if (Objects.equals(currentItem, "Sticks")
-                && numberOfItems.get(itemNames.indexOf("Wooden Planks")) >= 2
-                && numberOfItems.get(itemNames.indexOf("Sticks")) > 0) {
-            System.out.println("Press B to create Wooden Sword");
-            String next = in.nextLine();
-            if (next.equals("B")) {
-                for (int i = 0; i < 1; i++) {
-                    this.addItem(woodenSword);
-                    removeNItems(woodenPlank, 2);
-                    removeNItems(sticks, 1);
-                    setCurrentItemTo(items.indexOf(woodenSword));
-                    printInventory();
-                }
-            }
-        }
-    }
 
     public ArrayList<String> getItemNames() {
         return itemNames;

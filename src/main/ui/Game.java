@@ -3,9 +3,7 @@ package ui;
 import model.Inventory;
 import model.Mob;
 import model.Player;
-import model.items.Block;
-import model.items.Food;
-import model.items.Weapon;
+import model.items.*;
 
 import java.util.*;
 
@@ -31,8 +29,104 @@ public class Game {
 
     // Initialize blocks
     static Block wood = new Block("Wood", null);
-    static Weapon woodenSword = new Weapon("Wooden Sword", "sword");
     static Food rawMeat = new Food("Raw Meat", 5);
+    static Item woodenPlank = new Block("Wooden Planks", null);
+    static Item sticks = new Misc("Sticks");
+    static Item woodenSword = new Weapon("Wooden Sword", "sword");
+
+    // Initialize inventory
+    static Inventory inventory;
+
+    // Intialize scanner
+    static Scanner in = new Scanner(System.in);
+
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings", "checkstyle:LineLength"})
+    public static void printInventory() {
+        boolean running = true;
+
+        while (running) {
+            for (String i : inventory.getItemNames()) {
+                System.out.println(inventory.getItemNames().indexOf(i) + 1 + ".  " + i + " ("
+                        + inventory.getNumberOfItems().get(inventory.getItemNames().indexOf(i)) + ")");
+            }
+            printCurrentItem();
+            System.out.println("Press the item number to change current item.");
+            System.out.println("Press E to close the inventory");
+            Scanner in = new Scanner(System.in);
+            String numToChange = in.nextLine();
+            if (numToChange.equals("E")) {
+                break;
+            } else if (numToChange.equals("1") || numToChange.equals("2") || numToChange.equals("3")
+                    || numToChange.equals("4")) {
+                inventory.setCurrentItemTo(Integer.valueOf(numToChange) - 1);
+                System.out.println("Press R to throw away " + inventory.getCurrentItem());
+                System.out.println("Press E to close your inventory.");
+                getRecipeOfCurrentItem();
+                String closeInv = in.nextLine();
+
+                if (closeInv.equals("E")) {
+                    System.out.println("" + " ");
+                    break;
+                } else if (closeInv.equals("R")) {
+                    inventory.removeItemBunch(inventory.getItems().get(inventory.getItemNames().indexOf(inventory.getCurrentItem())));
+                    printInventory();
+                    printCurrentItem();
+                } else {
+                    continue;
+                }
+            } else {
+                inventory.setCurrentItemTo(Integer.valueOf(numToChange) - 1);
+                printInventory();
+                System.out.println("\n\n");
+                printCurrentItem();
+            }
+        }
+    }
+
+    public static void printCurrentItem() {
+        System.out.println("Your current item is " + inventory.getCurrentItem());
+        getRecipeOfCurrentItem();
+    }
+
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings", "checkstyle:LineLength"})
+    public static void getRecipeOfCurrentItem() {
+        if (inventory.getCurrentItem() == "Wood") {
+            System.out.println("Press B to create Wooden Planks (4)");
+            String next = in.nextLine();
+            if (next.equals("B")) {
+                for (int i = 0; i < 4; i++) {
+                    inventory.addItem(woodenPlank);
+                    inventory.setCurrentItemTo(inventory.getItems().indexOf(woodenPlank));
+                    printInventory();
+                }
+            }
+        } else if (inventory.getCurrentItem() == "Wooden Planks" && inventory.getNumberOfItems().get(inventory.getItemNames().indexOf("Wooden Planks")) >= 2) {
+            System.out.println("Press B to create Sticks (2)");
+            String next = in.nextLine();
+            if (next.equals("B")) {
+                for (int i = 0; i < 2; i++) {
+                    inventory.addItem(sticks);
+                }
+                inventory.removeNItems(woodenPlank, 2);
+                inventory.setCurrentItemTo(inventory.getItems().indexOf(sticks));
+                printInventory();
+            }
+        } else if (Objects.equals(inventory.getCurrentItem(), "Sticks")
+                && inventory.getNumberOfItems().get(inventory.getItemNames().indexOf("Wooden Planks")) >= 2
+                && inventory.getNumberOfItems().get(inventory.getItemNames().indexOf("Sticks")) > 0) {
+            System.out.println("Press B to create Wooden Sword");
+            String next = in.nextLine();
+            if (next.equals("B")) {
+                for (int i = 0; i < 1; i++) {
+                    inventory.addItem(woodenSword);
+                    inventory.removeNItems(woodenPlank, 2);
+                    inventory.removeNItems(sticks, 1);
+                    inventory.setCurrentItemTo(inventory.getItems().indexOf(woodenSword));
+                    printInventory();
+                }
+            }
+        }
+    }
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings", "checkstyle:LineLength"})
     public static void main(String[] args) {
@@ -40,7 +134,7 @@ public class Game {
 
         ArrayList<Mob> hostileMobList = new ArrayList<>(Arrays.asList(spider, enderman, blaze, chickenJockey, creeper, skeleton, zombie));
 
-        Inventory inventory = new Inventory();
+        inventory =  new Inventory();
 
         Scanner in = new Scanner(System.in);
         Random rand = new Random();
@@ -92,7 +186,7 @@ public class Game {
                 System.out.println("Press 1 to chop wood.");
                 chop = in.nextLine();
                 if (chop.equals("E")) {
-                    inventory.printInventory();
+                    printInventory();
                 } else if (chop.isEmpty()) {
                     continue;
                 } else {
@@ -145,7 +239,7 @@ public class Game {
                     String inv = in.nextLine();
 
                     if (inv.equals("E") || inv.equals("e")) {
-                        inventory.printInventory();
+                        printInventory();
                     }
                 } else if (!inventory.getItemNames().contains("Wooden Sword")) {
                     String out = "You should craft a wooden sword.";
@@ -154,7 +248,7 @@ public class Game {
                     String inv = in.nextLine();
 
                     if (inv.equals("E") || inv.equals("e")) {
-                        inventory.printInventory();
+                        printInventory();
                     }
                 } else {
                     System.out.println("Dusk is approaching... good luck.");

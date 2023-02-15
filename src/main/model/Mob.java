@@ -1,16 +1,11 @@
 package model;
 
-import model.Player;
-
-import java.util.Random;
-
 public class Mob {
 
     private String name;
     private Integer hp;
     private Integer baseAttack;
     private Double speed;
-    Random random = new Random();
 
     // EFFECTS: creates a mob and initializes its name, health,
     // base attack, and speed
@@ -37,7 +32,4 @@ public class Mob {
         return speed;
     }
 
-    public void setBaseAttack(Integer baseAttack) {
-        this.baseAttack += random.nextInt(this.baseAttack) + baseAttack;
-    }
 }
