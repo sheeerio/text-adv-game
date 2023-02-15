@@ -1,7 +1,7 @@
 package model;
 
+// Inventory class contains information about the inventory and deals with sorting, adding, and removing of items
 import model.items.Item;
-import model.items.*;
 
 import java.util.*;
 

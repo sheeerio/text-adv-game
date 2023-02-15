@@ -1,5 +1,6 @@
 package model.items;
 
+// Misc class contains information about miscellaneous items such as sticks
 public class Misc implements Item {
 
     private String name;

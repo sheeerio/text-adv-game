@@ -1,5 +1,6 @@
 package model;
 
+// Player class contains information about the Player statistics that will be used in the fight
 public class Player {
 
     private static Integer attack;

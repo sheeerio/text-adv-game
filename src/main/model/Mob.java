@@ -1,5 +1,6 @@
 package model;
 
+// Mob class contains information about mob stats that would be during the Game fight.
 public class Mob {
 
     private String name;

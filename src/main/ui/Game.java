@@ -10,6 +10,7 @@ import java.util.*;
 import static model.Player.getAttack;
 
 
+// Game represents information about the UI of game, including printing and scanning.
 public class Game {
     // Initialize day
     private static int timeState = 1; // 1 : day; 2 : night

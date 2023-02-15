@@ -1,5 +1,6 @@
 package model.items;
 
+// Weapon class contains information about items that will be used in the fight
 public class Weapon implements Item {
 
     private String name;
@@ -23,14 +24,7 @@ public class Weapon implements Item {
         if (this.classs == "sword") {
             this.verb = "sliced";
             this.infVerb = "kill";
-        } else if (this.classs == "axe") {
-            this.verb = "chopped";
-            this.infVerb = "chop";
-        } else {
-            this.verb = "punched";
-            this.infVerb = "punch";
         }
-
     }
 
     @Override
@@ -51,11 +45,4 @@ public class Weapon implements Item {
         return infVerb;
     }
 
-    public Integer getAttack() {
-        if (this.classs.equals("sword")) {
-            return 20;
-        } else {
-            return 2;
-        }
-    }
 }
