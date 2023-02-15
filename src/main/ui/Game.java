@@ -7,7 +7,6 @@ import model.items.*;
 
 import java.util.*;
 
-import static model.Player.getAttack;
 
 
 // Game represents information about the UI of game, including printing and scanning.
@@ -17,9 +16,7 @@ public class Game {
 
     // Initialize neutral mobs
     static Mob spider = new Mob("Spider", 16, 2, .4);
-    static Mob wolf = new Mob("Wolf", 8, 4, 0.3);
     static Mob enderman = new Mob("Enderman", 40, 7, 0.0);
-    static Mob ironGolem = new Mob("Iron Golem", 100, 21, 0.25);
 
     // Initialize hostile mobs
     static Mob blaze = new Mob("Blaze", 20, 6, 0.1);
@@ -37,6 +34,9 @@ public class Game {
 
     // Initialize inventory
     static Inventory inventory;
+
+    // Initialize player
+    static Player player;
 
     // Intialize scanner
     static Scanner in = new Scanner(System.in);
@@ -153,6 +153,7 @@ public class Game {
         String username = in.nextLine();
 
         System.out.println("Welcome to the world, " + username + "\n\n\n\n\n");
+        player = new Player(username, 20, 100);
 
         Weapon weapon = new Weapon("hands", "hands");
         boolean running = true;
@@ -285,7 +286,7 @@ public class Game {
 
                     String input = in.nextLine();
                     if (input.equals("1")) {
-                        int damageDealt = rand.nextInt(getAttack()) + 10;
+                        int damageDealt = rand.nextInt(player.getAttack()) + 10;
                         int damageTaken = enemy.getBaseAttack();
 
                         enemyHealth -= damageDealt;
