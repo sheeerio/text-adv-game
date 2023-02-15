@@ -46,7 +46,6 @@ public class Game {
     public static void main(String[] args) {
         String difficulty = "normal";
 
-        ArrayList<Mob> neutralMobList = new ArrayList<>(Arrays.asList(spider, wolf, enderman, ironGolem));
         ArrayList<Mob> hostileMobList = new ArrayList<>(Arrays.asList(spider, enderman, blaze, chickenJockey, creeper, skeleton, zombie));
 
         Inventory inventory = new Inventory();
@@ -56,7 +55,6 @@ public class Game {
 
         // Game variables
         String[] animalMobs = {"wolf", "cow", "pig", "sheep"};
-        String[] neutralMobs = {"Spider", "Wolf", "Enderman", "Iron Golem"};
 
         System.out.println("Choose Route:\n\n1. Pacifist\n2. Survival");
         String route = in.nextLine();
@@ -67,7 +65,6 @@ public class Game {
         System.out.println("Enter your username: ");
         String username = in.nextLine();
 
-        Player player = new Player(username, 20, 100);
         System.out.println("Welcome to the world, " + username + "\n\n\n\n\n");
 
         Weapon weapon = new Weapon("hands", "hands");
@@ -172,7 +169,7 @@ public class Game {
                 }
             }
             if (difficulty.equals("hard")) {
-                System.out.println("Quit the game you pussy");
+                System.out.println("Quit the game!");
                 System.exit(0);
             }
 
@@ -270,7 +267,6 @@ public class Game {
 
                 if (input.equals("1")) {
                     System.out.println("You continue on...");
-                    System.out.println("pussy");
                 } else if (input.equals("2")) {
                     System.out.println("You exit the cave...");
                     break;
