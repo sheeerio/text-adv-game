@@ -79,3 +79,4 @@ contribute to its resurgence in popularity.
 - As a user, I want to be able to change the sound option (mute/sound on)
 - As a user, I want to be able to view buttons I cannot click due to lack of experience or items
 - As a user, I want to be able to mark a place on the map
+- As a user, I want to be able to load my previous game progress

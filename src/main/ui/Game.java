@@ -42,6 +42,7 @@ public class Game {
     static Scanner in = new Scanner(System.in);
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings", "checkstyle:LineLength"})
+    // EFFECT: prints the current inventory
     public static void printInventory() {
         boolean running = true;
 
@@ -84,12 +85,14 @@ public class Game {
         }
     }
 
+    // EFFECT: prints the current item
     public static void printCurrentItem() {
         System.out.println("Your current item is " + inventory.getCurrentItem());
         getRecipeOfCurrentItem();
     }
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings", "checkstyle:LineLength"})
+    // EFFECT: prints the recipe of curent item
     public static void getRecipeOfCurrentItem() {
         if (inventory.getCurrentItem() == "Wood") {
             System.out.println("Press B to create Wooden Planks (4)");
@@ -97,9 +100,10 @@ public class Game {
             if (next.equals("B")) {
                 for (int i = 0; i < 4; i++) {
                     inventory.addItem(woodenPlank);
-                    inventory.setCurrentItemTo(inventory.getItems().indexOf(woodenPlank));
-                    printInventory();
                 }
+                inventory.removeNItems(wood, 1);
+                inventory.setCurrentItemTo(inventory.getItems().indexOf(woodenPlank));
+                printInventory();
             }
         } else if (inventory.getCurrentItem() == "Wooden Planks" && inventory.getNumberOfItems().get(inventory.getItemNames().indexOf("Wooden Planks")) >= 2) {
             System.out.println("Press B to create Sticks (2)");
@@ -130,12 +134,13 @@ public class Game {
     }
 
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings", "checkstyle:LineLength"})
+    // EFFECT: main
     public static void main(String[] args) {
         String difficulty = "normal";
 
         ArrayList<Mob> hostileMobList = new ArrayList<>(Arrays.asList(spider, enderman, blaze, chickenJockey, creeper, skeleton, zombie));
 
-        inventory =  new Inventory();
+        inventory = new Inventory();
 
         Scanner in = new Scanner(System.in);
         Random rand = new Random();
@@ -163,7 +168,7 @@ public class Game {
         WOW:
         while (running) {
 
-            System.out.println("Press 1 to " + weapon.getInfVerb() + " wood.");
+            System.out.println("Press 1 to " + weapon.getInfVerb() + " tree.");
             String chop = in.nextLine();
             int sum = 0;
             boolean oneY = false;
@@ -185,7 +190,8 @@ public class Game {
                 System.out.println("You now have " + inventory.count(wood) + " wooden logs!\n");
                 System.out.println("Press E to view your inventory.");
                 System.out.println("Press Enter to quit chopping wood.");
-                System.out.println("Press 1 to chop wood.");
+                System.out.println("Press 1 to " + weapon.getInfVerb() + " tree");
+
                 chop = in.nextLine();
                 if (chop.equals("E")) {
                     printInventory();
@@ -310,6 +316,7 @@ public class Game {
                                         + " raw meat.");
                             } else {
                                 System.out.println("You don't have enough meat... get fucked!");
+                                break;
                             }
                         } else {
                             System.out.println("\t> You have no health items left! Defeat enemies for a chance to get one!");
@@ -372,6 +379,7 @@ public class Game {
 
     }
 
+    // EFFECT: returns the first person subject agreement of verb for animal
     public static String animalSound(String animal) {
         if (animal == "wolf") {
             return "barks";
@@ -384,6 +392,7 @@ public class Game {
         }
     }
 
+    // EFFECT: delays excution of next line after makeWait() by 2 seconds
     public static void makeWait() {
         System.out.print(".");
         try {
