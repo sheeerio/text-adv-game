@@ -379,7 +379,7 @@ public class Game {
 
     }
 
-    // EFFECT: returns the first person subject agreement of verb for animal
+    // EFFECT: returns the first-person subject agreement of verb for animal
     public static String animalSound(String animal) {
         if (animal == "wolf") {
             return "barks";
@@ -392,7 +392,7 @@ public class Game {
         }
     }
 
-    // EFFECT: delays excution of next line after makeWait() by 2 seconds
+    // EFFECT: delays execution of next line after makeWait() by 2 seconds
     public static void makeWait() {
         System.out.print(".");
         try {

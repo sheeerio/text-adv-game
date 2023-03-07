@@ -1,5 +1,7 @@
 package model.items;
 
+import org.json.JSONObject;
+
 // Weapon class contains information about items that will be used in the fight
 public class Weapon implements Item {
 
@@ -28,6 +30,14 @@ public class Weapon implements Item {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    // EFFECTS: returns this as JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        return json;
     }
 
 

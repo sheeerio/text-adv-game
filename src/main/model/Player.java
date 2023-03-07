@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Player class contains information about the Player statistics that will be used in the fight
-public class Player {
+public class Player implements Writable {
 
     private static Integer health;
     private static String username;
@@ -23,5 +26,14 @@ public class Player {
 
     public static void setHealth(Integer health) {
         Player.health = health;
+    }
+
+    // EFFECTS: returns this as JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("hp", health);
+        json.put("username", username);
+        return json;
     }
 }

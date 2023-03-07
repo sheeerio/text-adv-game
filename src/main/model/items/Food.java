@@ -1,5 +1,7 @@
 package model.items;
 
+import org.json.JSONObject;
+
 public class Food implements Item {
 
 
@@ -17,6 +19,14 @@ public class Food implements Item {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    // EFFECTS: returns this as JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        return json;
     }
 
 

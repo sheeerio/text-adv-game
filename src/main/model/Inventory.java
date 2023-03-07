@@ -1,12 +1,17 @@
 package model;
 
 // Inventory class contains information about the inventory and deals with sorting, adding, and removing of items
+
 import model.items.Item;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 
-public class Inventory {
+public class Inventory implements Writable {
     private String currentItem;
     LinkedList<Item> items;
     ArrayList<String> itemNames;
@@ -115,6 +120,27 @@ public class Inventory {
 
     public LinkedList<Item> getItems() {
         return items;
+    }
+
+    // EFFECTS: returns this as JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("items", itemsToJson());
+        return json;
+    }
+
+    public JSONArray itemsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Item t : getItems()) {
+            JSONObject obj = new JSONObject();
+            obj.put("name", t.getName());
+            obj.put("number", numberOfItems.get(getItems().indexOf(t)));
+            jsonArray.put(obj);
+        }
+
+        return jsonArray;
     }
 
 }
