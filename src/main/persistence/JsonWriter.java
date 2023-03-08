@@ -29,7 +29,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of inventory to file
+    // EFFECTS: writes JSON representation of inventory and stats to file
     public void writeInventory(Inventory inv, Player p) {
         JSONObject jsonP = p.toJson();
         JSONObject json = inv.toJson();
@@ -39,13 +39,6 @@ public class JsonWriter {
         JSONObject jsonPapa = new JSONObject();
         jsonPapa.put("MOMOS", jsonFull);
         saveToFile(jsonPapa.toString(TAB));
-    }
-
-    // MODIFIES: this
-    // EFFECTS: writes JSON representation of player to file
-    public void writePlayer(Player player) {
-        JSONObject json = player.toJson();
-        saveToFile(json.toString(TAB));
     }
 
     // MODIFIES: this
