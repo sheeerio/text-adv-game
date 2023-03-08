@@ -1,6 +1,8 @@
 package persistence;
 
 import model.Inventory;
+import model.Player;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -27,9 +29,22 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
-    public void write(Inventory inv) {
+    // EFFECTS: writes JSON representation of inventory to file
+    public void writeInventory(Inventory inv, Player p) {
+        JSONObject jsonP = p.toJson();
         JSONObject json = inv.toJson();
+        JSONArray jsonFull = new JSONArray();
+        jsonFull.put(json);
+        jsonFull.put(jsonP);
+        JSONObject jsonPapa = new JSONObject();
+        jsonPapa.put("MOMOS", jsonFull);
+        saveToFile(jsonPapa.toString(TAB));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: writes JSON representation of player to file
+    public void writePlayer(Player player) {
+        JSONObject json = player.toJson();
         saveToFile(json.toString(TAB));
     }
 

@@ -1,7 +1,5 @@
 package model.items;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 // Block class contains information about the blocks used in early game for creating other items
@@ -23,13 +21,6 @@ public class Block implements Item {
     }
 
     // EFFECTS: returns this as JSON object
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("name", name);
-        return json;
-    }
-
     public ArrayList<Item> getRequiredItems() {
         return requiredItems;
     }

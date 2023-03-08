@@ -1,6 +1,7 @@
 package persistence;
 
 import model.Inventory;
+import model.Player;
 import model.items.Block;
 import model.items.Food;
 import model.items.Item;
@@ -31,7 +32,8 @@ public class JsonWriterTest {
             Inventory inv = new Inventory();
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyInventory.json");
             writer.open();
-            writer.write(inv);
+            Player p = new Player("muchagraciasofficial", 19);
+            writer.writeInventory(inv, p);
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testWriterEmptyInventory.json");
@@ -50,6 +52,7 @@ public class JsonWriterTest {
             Item woodenPlank = new Block("Wooden Planks", null);
             Item rawMeat  = new Food("Raw Meat", 5);
             Inventory inv = new Inventory();
+            Player p = new Player("muchagraciasofficial", 20);
             inv.addItem(wood);
             inv.addItem(wood);
             inv.addItem(woodenPlank);
@@ -57,7 +60,7 @@ public class JsonWriterTest {
             inv.addItem(rawMeat);
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralInventory.json");
             writer.open();
-            writer.write(inv);
+            writer.writeInventory(inv, p);
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralInventory.json");

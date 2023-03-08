@@ -51,4 +51,12 @@ public class JsonReaderTest extends JsonTest {
             fail("Couldn't read from file");
         }
     }
+
+    @Test
+    void toJsonTest() throws IOException {
+        JsonReader reader = new JsonReader("./data/testReaderGeneralInventory.json");
+        Inventory inv = reader.read();
+        assertEquals("{\"items\":[{\"number\":1,\"name\":\"Wood\"},{\"number\":1,\"name\":\"Wooden Planks\"}]}"
+                , inv.toJson().toString());
+    }
 }

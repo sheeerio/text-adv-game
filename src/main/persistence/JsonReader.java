@@ -50,8 +50,10 @@ public class JsonReader {
     // MODIFIES: inv
     // EFFECTS: parses thingies from JSON object and adds them to workroom
     private void addItems(Inventory inv, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("items");
-        for (Object json : jsonArray) {
+        JSONArray jsonArray = jsonObject.getJSONArray("MOMOS");
+        JSONObject itemObject = jsonArray.getJSONObject(0);
+        JSONArray jsonArray2 = itemObject.getJSONArray("items");
+        for (Object json : jsonArray2) {
             JSONObject nextItem = (JSONObject) json;
             addItem(inv, nextItem);
         }

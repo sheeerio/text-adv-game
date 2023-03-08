@@ -1,7 +1,5 @@
 package model.items;
 
-import org.json.JSONObject;
-
 public class Food implements Item {
 
 
@@ -22,12 +20,6 @@ public class Food implements Item {
     }
 
     // EFFECTS: returns this as JSON object
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("name", name);
-        return json;
-    }
 
 
     public int getHpHealed() {
