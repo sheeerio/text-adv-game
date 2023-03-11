@@ -4,13 +4,22 @@ import model.Inventory;
 import model.Mob;
 import model.Player;
 import model.items.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
-
 
 
 // Game represents information about the UI of game, including printing and scanning.
 public class Game {
+
+    // Initialize JSON classes
+    private static final String JSON_STORE = "./data/game.json";
+    private static JsonReader jsonReader = new JsonReader(JSON_STORE);
+    private static JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
+
     // Initialize day
     private static int timeState = 1; // 1 : day; 2 : night
 
@@ -54,10 +63,19 @@ public class Game {
             printCurrentItem();
             System.out.println("Press the item number to change current item.");
             System.out.println("Press E to close the inventory");
+            System.out.println("Press S to save the inventory");
+            System.out.println("Press L to read the inventory");
             Scanner in = new Scanner(System.in);
             String numToChange = in.nextLine();
             if (numToChange.equals("E")) {
                 break;
+            } else if (numToChange.equals("L")) {
+                try {
+                    inventory = jsonReader.read();
+                    System.out.println("Loaded Game from " + JSON_STORE);
+                } catch (IOException e) {
+                    System.out.println("Unable to read from file: " + JSON_STORE);
+                }
             } else if (numToChange.equals("1") || numToChange.equals("2") || numToChange.equals("3")
                     || numToChange.equals("4")) {
                 inventory.setCurrentItemTo(Integer.valueOf(numToChange) - 1);
@@ -66,7 +84,7 @@ public class Game {
                 getRecipeOfCurrentItem();
                 String closeInv = in.nextLine();
 
-                if (closeInv.equals("E")) {
+                if (numToChange.equals("E")) {
                     System.out.println("" + " ");
                     break;
                 } else if (closeInv.equals("R")) {
@@ -159,6 +177,18 @@ public class Game {
 
         System.out.println("Welcome to the world, " + username + "\n\n\n\n\n");
         player = new Player(username, 20);
+
+        System.out.println("Press 1 to load previous game data");
+        String baba = in.nextLine();
+
+        if (baba.equals("1")) {
+            try {
+                inventory = jsonReader.read();
+                System.out.println("Loaded inventory from " + JSON_STORE);
+            } catch (IOException e) {
+                System.out.println("Unable to read from file: " + JSON_STORE);
+            }
+        }
 
         Weapon weapon = new Weapon("hands", "hands");
         boolean running = true;
@@ -351,8 +381,31 @@ public class Game {
                 System.out.println("What would you like to do now?");
                 System.out.println("1. Continue fighting");
                 System.out.println("2. Exit cave");
+                System.out.println("3. Save Game");
+                System.out.println("4. Load Game (Current game data will be lost)");
 
                 String input = in.nextLine();
+
+                if (input.equals("3")) {
+                    try {
+                        jsonWriter.open();
+                        jsonWriter.writeInventory(inventory, player);
+                        jsonWriter.close();
+                        System.out.println("Saved Game to " + JSON_STORE);
+                        continue WOW;
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Unable to read from file: " + JSON_STORE);
+                    }
+                }
+
+                if (input.equals("4")) {
+                    try {
+                        inventory = jsonReader.read();
+                        System.out.println("Loaded Game from " + JSON_STORE);
+                    } catch (IOException e) {
+                        System.out.println("Unable to read from file: " + JSON_STORE);
+                    }
+                }
 
                 while (!input.equals("1") && !input.equals("2")) {
 
@@ -414,6 +467,8 @@ public class Game {
         }
     }
 
+    // MODIFIES: this
+    // EFFECT: changes state of time
     public static void setTimeState(long time) {
         if (time > 100000) {
             timeState++;

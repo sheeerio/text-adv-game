@@ -1,5 +1,5 @@
-{
-  "items": [
+{ "MOMOS": [
+  {"items": [
     {
       "name": "Wood",
       "number": 1
@@ -8,5 +8,9 @@
       "name": "Wooden Planks",
       "number": 1
     }
-  ]
-}
+  ]},
+  {"stats": {
+    "hp": 20,
+    "username": "muchagraciasofficial"
+  }}
+]}

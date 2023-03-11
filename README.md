@@ -71,12 +71,11 @@ contribute to its resurgence in popularity.
 - As a user, I want to be able to kill enemies
 - As a user, I want to be able to eat food 
 - As a user, I want to be able to view a list of my current items in inventory
-- As a user, I want to be able to save my current progress
-- As a user, I want to be able to delete a saved game version
+- As a user, I want to be able to save my current progress as inventory and player stats
+- As a user, I want to be able to load my previous progress as inventory and player stats
 - As a user, I want to be able to interact with entities (NPCs) via given options
 - As a user, I want to be able to interact with miscellaneous items in my inventory
 - As a user, I want to be able to change the display mode of the game (light mode/dark mode)
 - As a user, I want to be able to change the sound option (mute/sound on)
 - As a user, I want to be able to view buttons I cannot click due to lack of experience or items
-- As a user, I want to be able to mark a place on the map
 - As a user, I want to be able to load my previous game progress
