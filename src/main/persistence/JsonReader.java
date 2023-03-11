@@ -64,16 +64,7 @@ public class JsonReader {
     private void addItem(Inventory inv, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         Integer num = jsonObject.getInt("number");
-        Item item;
-        if (name.equals("Wood") || name.equals("Wooden Planks")) {
-            item = new Block(name, null);
-        } else if (name.equals("Sticks")) {
-            item = new Misc(name);
-        } else if (name.equals("Raw Meat")) {
-            item = new Food(name, 5);
-        } else {
-            item = new Weapon(name, null);
-        }
+        Item item = new Block(name, null);
         for (int i = 0; i < num; i++) {
             inv.addItem(item);
         }
