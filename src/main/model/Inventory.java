@@ -21,7 +21,7 @@ public class Inventory implements Writable {
 
     // EFFECTS: creates an empty inventory
     public Inventory() {
-        currentItem = null;
+        currentItem = "empty";
         items = new LinkedList<>();
         itemNames = new ArrayList<>();
         numberOfItems = new ArrayList<>();

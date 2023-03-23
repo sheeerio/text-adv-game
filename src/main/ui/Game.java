@@ -7,13 +7,36 @@ import model.items.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.swing.*;
+import javax.swing.text.DefaultCaret;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Timer;
 import java.util.*;
 
 
 // Game represents information about the UI of game, including printing and scanning.
 public class Game {
+
+    JFrame window;
+    Container con;
+    JPanel titleNamePanel, startButtonPanel, mainTextPanel, choiceButtonPanel, playerPanel;
+    JPanel startFieldPanel, inventoryTextPanel;
+    JLabel titleNameLabel, hpLabel, hpLabelNumber, weaponLabel, weaponLabelName, startFieldLabel;
+    JLabel usernameTextLabel;
+    Font titleFont = new Font("Times New Roman", Font.BOLD, 94);
+    Font normalFont = new Font("Times New Roman", Font.PLAIN, 18);
+    JButton startButton, choice1, choice2, choice3, choice4;
+    JTextArea mainTextArea, inventoryTextArea;
+    JTextField usernameTextField;
+    DefaultCaret caret;
+    JScrollPane scroll;
+
+    TitleScreenHandler tsHandler = new TitleScreenHandler();
+    ActionListener chopListener;
 
     // Initialize JSON classes
     private static final String JSON_STORE = "./data/game.json";
@@ -22,6 +45,8 @@ public class Game {
 
     // Initialize day
     private static int timeState = 1; // 1 : day; 2 : night
+    int woodChopped = 0;
+    boolean whichOne = false;
 
     // Initialize neutral mobs
     static Mob spider = new Mob("Spider", 16, 2, .4);
@@ -74,6 +99,15 @@ public class Game {
                     inventory = jsonReader.read();
                     System.out.println("Loaded Game from " + JSON_STORE);
                 } catch (IOException e) {
+                    System.out.println("Unable to read from file: " + JSON_STORE);
+                }
+            } else if (numToChange.equals("S")) {
+                try {
+                    jsonWriter.open();
+                    jsonWriter.writeInventory(inventory, player);
+                    jsonWriter.close();
+                    System.out.println("Saved Game to " + JSON_STORE);
+                } catch (FileNotFoundException e) {
                     System.out.println("Unable to read from file: " + JSON_STORE);
                 }
             } else if (numToChange.equals("1") || numToChange.equals("2") || numToChange.equals("3")
@@ -154,11 +188,11 @@ public class Game {
     @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings", "checkstyle:LineLength"})
     // EFFECT: main
     public static void main(String[] args) {
+        new Game();
         String difficulty = "normal";
 
         ArrayList<Mob> hostileMobList = new ArrayList<>(Arrays.asList(spider, enderman, blaze, chickenJockey, creeper, skeleton, zombie));
 
-        inventory = new Inventory();
 
         Scanner in = new Scanner(System.in);
         Random rand = new Random();
@@ -383,6 +417,7 @@ public class Game {
                 System.out.println("2. Exit cave");
                 System.out.println("3. Save Game");
                 System.out.println("4. Load Game (Current game data will be lost)");
+                System.out.println("5. Go outside to chop wood");
 
                 String input = in.nextLine();
 
@@ -392,10 +427,12 @@ public class Game {
                         jsonWriter.writeInventory(inventory, player);
                         jsonWriter.close();
                         System.out.println("Saved Game to " + JSON_STORE);
-                        continue WOW;
                     } catch (FileNotFoundException e) {
                         System.out.println("Unable to read from file: " + JSON_STORE);
                     }
+                }
+                if (input.equals("5")) {
+                    continue WOW;
                 }
 
                 if (input.equals("4")) {
@@ -473,5 +510,197 @@ public class Game {
         if (time > 100000) {
             timeState++;
         }
+    }
+
+    public Game() {
+        window = new JFrame();
+        window.setSize(800, 600);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.getContentPane().setBackground(Color.black);
+        window.setLayout(null);
+        con = window.getContentPane();
+
+        titleNamePanel = new JPanel();
+        titleNamePanel.setBounds(100, 100, 600, 150);
+        titleNamePanel.setBackground(Color.black);
+        titleNameLabel = new JLabel("12 SECONDS");
+        titleNameLabel.setText("12 SECONDS");
+        titleNameLabel.setForeground(Color.white);
+        titleNameLabel.setFont(titleFont);
+
+        startFieldPanel = new JPanel();
+        startFieldPanel.setBounds(200, 240, 400, 40);
+        startFieldPanel.setBackground(Color.black);
+        startFieldPanel.setForeground(Color.white);
+
+        usernameTextLabel = new JLabel();
+        usernameTextField = new JTextField("Enter Username, e.g. PussyDestroyer69", 40);
+        startFieldPanel.setLayout(new GridLayout(1, 2));
+        startFieldPanel.add(usernameTextField);
+
+        startButtonPanel = new JPanel();
+        startButtonPanel.setBounds(300, 350, 200, 100);
+        startButtonPanel.setBackground(Color.black);
+
+        startButton = new JButton("START");
+        startButtonPanel.setBackground(Color.black);
+        startButtonPanel.setForeground(Color.white);
+
+        titleNamePanel.add(titleNameLabel);
+        startButtonPanel.add(startButton);
+        startButton.setFont(normalFont);
+        startButton.addActionListener(tsHandler);
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                player = new Player(usernameTextField.getText(), 20);
+            }
+        });
+
+        con.add(titleNamePanel);
+        con.add(startButtonPanel);
+        con.add(startFieldPanel);
+        window.setVisible(true);
+    }
+
+    public void createGameScreen() {
+        titleNamePanel.setVisible(false);
+        startButtonPanel.setVisible(false);
+        startFieldPanel.setVisible(false);
+
+        mainTextPanel = new JPanel();
+        mainTextPanel.setBounds(100, 100, 600, 250);
+        mainTextPanel.setBackground(Color.black);
+        con.add(mainTextPanel);
+        inventory = new Inventory();
+
+        mainTextArea = new JTextArea("Welcome to the world, " + player.getUsername());
+        mainTextArea.setBounds(100, 100, 600, 250);
+        mainTextArea.setBackground(Color.black);
+        mainTextArea.setForeground(Color.white);
+        mainTextArea.setFont(normalFont);
+        mainTextArea.setLineWrap(true);
+        scroll = new JScrollPane(mainTextArea);
+        mainTextPanel.add(mainTextArea);
+        mainTextPanel.add(scroll);
+
+        choiceButtonPanel = new JPanel();
+        choiceButtonPanel.setBounds(250, 350, 300, 150);
+        choiceButtonPanel.setBackground(Color.black);
+        choiceButtonPanel.setLayout(new GridLayout(4, 1));
+        con.add(choiceButtonPanel);
+
+        choice1 = new JButton("chop wood");
+        choice1.setBackground(Color.black);
+        choice1.setFont(normalFont);
+
+        choice1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                //do your task
+                Random lund = new Random();
+                int which = lund.nextInt(2);
+                int num = lund.nextInt(4) + 1;
+                if (which == 0) {
+                    whichOne = true;
+                    for (int i = 0; i < num; i++) {
+                        inventory.addItem(wood);
+                    }
+                } else {
+                    whichOne = false;
+                    for (int i = 0; i < num; i++) {
+                        inventory.addItem(woodenPlank);
+                    }
+                }
+                woodChopped = num;
+                callWoodPrint();
+            }});
+        choiceButtonPanel.add(choice1);
+
+        choice2 = new JButton("Choice 2");
+        choice2.setBackground(Color.black);
+        choice2.setFont(normalFont);
+        choiceButtonPanel.add(choice2);
+
+        choice3 = new JButton("Choice 3");
+        choice3.setBackground(Color.black);
+        choice3.setFont(normalFont);
+        choiceButtonPanel.add(choice3);
+
+        choice4 = new JButton("Check Inventory");
+        choice4.setBackground(Color.black);
+        choice4.setFont(normalFont);
+        choiceButtonPanel.add(choice4);
+        choice4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openInventory();
+            }
+        });
+
+        playerPanel = new JPanel();
+        playerPanel.setBounds(100, 15, 700, 50);
+        playerPanel.setBackground(Color.black);
+        playerPanel.setLayout(new GridLayout(1, 3));
+        con.add(playerPanel);
+        hpLabel = new JLabel("HP: " + player.getHealth().toString());
+        hpLabel.setFont(normalFont);
+        hpLabel.setForeground(Color.white);
+        playerPanel.add(hpLabel);
+        weaponLabel = new JLabel("Current Item: " + inventory.getCurrentItem());
+        weaponLabel.setFont(normalFont);
+        weaponLabel.setForeground(Color.white);
+        playerPanel.add(weaponLabel);
+        weaponLabelName = new JLabel();
+        weaponLabelName.setFont(normalFont);
+        weaponLabelName.setForeground(Color.white);
+        playerPanel.add(weaponLabelName);
+
+        inventoryTextPanel = new JPanel();
+        inventoryTextPanel.setBounds(100, 100, 600, 250);
+        inventoryTextPanel.setBackground(Color.black);
+        con.add(inventoryTextPanel);
+        inventory = new Inventory();
+
+        inventoryTextArea = new JTextArea("Inventory: \n");
+        inventoryTextArea.setBounds(100, 100, 600, 250);
+        inventoryTextArea.setBackground(Color.black);
+        inventoryTextArea.setForeground(Color.white);
+        inventoryTextArea.setFont(normalFont);
+        inventoryTextArea.setLineWrap(true);
+        inventoryTextPanel.add(inventoryTextArea);
+    }
+
+    public class TitleScreenHandler implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            createGameScreen();
+        }
+    }
+
+    public void callWoodPrint() {
+        String ogText = mainTextArea.getText();
+        if (whichOne == true) {
+            mainTextArea.setText(ogText + "\nYou received " + woodChopped + " wood!");
+        } else {
+            mainTextArea.setText(ogText + "\nYou received " + woodChopped + " wooden planks!");
+        }
+        caret = (DefaultCaret)mainTextArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.OUT_BOTTOM);
+    }
+
+    public void openInventory() {
+        new Test(inventory, 300, 300);
+        mainTextPanel.setVisible(false);
+        String total = "";
+        for (Item i : inventory.getItems()) {
+            int index = inventory.getItemNames().indexOf(i.getName()) + 1;
+            total += total + index + ".  " +
+                    i.getName() + " ("
+                    + inventory.getNumberOfItems().get(inventory.getItems().indexOf(i)) + ")\n";
+        }
+        inventoryTextArea.setText(total);
+        con.add(mainTextPanel);
+        weaponLabel.setText("Current Item: " + inventory.getCurrentItem());
     }
 }
