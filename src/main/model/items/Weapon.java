@@ -1,7 +1,5 @@
 package model.items;
 
-import java.util.Objects;
-
 // Weapon class contains information about items that will be used in the fight
 public class Weapon implements Item {
 
@@ -43,22 +41,5 @@ public class Weapon implements Item {
 
     public String getInfVerb() {
         return infVerb;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Weapon weapon = (Weapon) o;
-        return Objects.equals(name, weapon.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 }

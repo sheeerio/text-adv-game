@@ -1,7 +1,5 @@
 package model.items;
 
-import java.util.Objects;
-
 public class Food implements Item {
 
 
@@ -28,20 +26,5 @@ public class Food implements Item {
         return hpHealed;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Food food = (Food) o;
-        return Objects.equals(name, food.name);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
 }

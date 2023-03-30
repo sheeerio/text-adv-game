@@ -68,7 +68,7 @@ class TestModel {
 
     @Test
     public void inventoryConstructorTest() {
-        assertEquals(null, inv.getCurrentItem());
+        assertFalse(inv.getCurrentItem().isEmpty());
         assertEquals(new ArrayList<>(), inv.getItems());
         assertEquals(new ArrayList<>(), inv.getItemNames());
         assertEquals(new ArrayList<>(), inv.getNumberOfItems());
@@ -175,25 +175,12 @@ class TestModel {
         assertFalse(wood.equals(spider));
         assertFalse(wood.equals(rawMeat));
         assertFalse(wood.equals(null));
-        assertFalse(rawMeat.equals(wood));
-        assertFalse(rawMeat.equals(corn));
-        assertFalse(rawMeat.equals(spider));
-        assertTrue(rawMeat.equals(rawMeat));
-        assertTrue(rawMeat.equals(woodenSword));
-        assertFalse(rawMeat.equals(null));
-        assertFalse(woodenSword.equals(wood));
-        assertFalse(woodenSword.equals(spider));
-        assertTrue(woodenSword.equals(woodenSword));
-        assertTrue(woodenSword.equals(rawMeat));
-        assertFalse(woodenSword.equals(null));
-        assertFalse(woodenSword.equals(stoneSword));
+        assertFalse(wood.equals(woodenSword));
     }
 
     @Test
     public void hashCodeTest() {
         assertEquals(wood.hashCode(), wood.hashCode());
         assertNotEquals(wood.hashCode(), rawMeat.hashCode());
-        assertEquals(woodenSword.hashCode(), woodenSword.hashCode());
-        assertNotEquals(woodenSword.hashCode(), woodenPlank.hashCode());
     }
 }
