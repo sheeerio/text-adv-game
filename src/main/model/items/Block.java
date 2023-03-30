@@ -27,6 +27,7 @@ public class Block implements Item {
     }
 
     @Override
+    // EFFECTS: changes the equals settings for the block class
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -39,6 +40,7 @@ public class Block implements Item {
     }
 
     @Override
+    // EFFECTS: changes the hashcode settings for the block class
     public int hashCode() {
         return Objects.hash(name);
     }

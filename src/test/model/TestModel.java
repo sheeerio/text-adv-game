@@ -12,7 +12,9 @@ class TestModel {
     Block wood;
     Block woodenPlank;
     Food rawMeat;
+    Food corn;
     Weapon woodenSword;
+    Weapon stoneSword;
     Misc sticks;
     Inventory inv;
     Mob spider;
@@ -24,7 +26,9 @@ class TestModel {
         woodenPlank = new Block("Wooden Planks", null);
         rawMeat  = new Food("Raw Meat", 5);
         woodenSword = new Weapon("Wooden Sword", "sword");
+        stoneSword = new Weapon("Stone Sword", "sword");
         sticks = new Misc("Sticks");
+        corn = new Food("Corn", 2);
         inv = new Inventory();
         spider = new Mob("Spider", 16, 2, .4);
         p1 = new Player("p1", 1);
@@ -168,14 +172,21 @@ class TestModel {
     @Test
     public void equalsTest() {
         assertTrue(wood.equals(wood));
+        assertFalse(wood.equals(spider));
         assertFalse(wood.equals(rawMeat));
         assertFalse(wood.equals(null));
         assertFalse(rawMeat.equals(wood));
-        assertFalse(rawMeat.equals(null));
+        assertFalse(rawMeat.equals(corn));
+        assertFalse(rawMeat.equals(spider));
         assertTrue(rawMeat.equals(rawMeat));
-        assertTrue(woodenSword.equals(woodenSword));
-        assertFalse(woodenSword.equals(null));
+        assertTrue(rawMeat.equals(woodenSword));
+        assertFalse(rawMeat.equals(null));
         assertFalse(woodenSword.equals(wood));
+        assertFalse(woodenSword.equals(spider));
+        assertTrue(woodenSword.equals(woodenSword));
+        assertTrue(woodenSword.equals(rawMeat));
+        assertFalse(woodenSword.equals(null));
+        assertFalse(woodenSword.equals(stoneSword));
     }
 
     @Test
