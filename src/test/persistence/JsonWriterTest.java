@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JsonWriterInventoryWindow {
+public class JsonWriterTest {
 
     @Test
     void testWriterInvalidFile() {
