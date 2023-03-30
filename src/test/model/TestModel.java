@@ -164,4 +164,25 @@ class TestModel {
         inv.setCurrentItemDefault();
         assertEquals(inv.getCurrentItem(), "Raw Meat");
     }
+
+    @Test
+    public void equalsTest() {
+        assertTrue(wood.equals(wood));
+        assertFalse(wood.equals(rawMeat));
+        assertFalse(wood.equals(null));
+        assertFalse(rawMeat.equals(wood));
+        assertFalse(rawMeat.equals(null));
+        assertTrue(rawMeat.equals(rawMeat));
+        assertTrue(woodenSword.equals(woodenSword));
+        assertFalse(woodenSword.equals(null));
+        assertFalse(woodenSword.equals(wood));
+    }
+
+    @Test
+    public void hashCodeTest() {
+        assertEquals(wood.hashCode(), wood.hashCode());
+        assertNotEquals(wood.hashCode(), rawMeat.hashCode());
+        assertEquals(woodenSword.hashCode(), woodenSword.hashCode());
+        assertNotEquals(woodenSword.hashCode(), woodenPlank.hashCode());
+    }
 }
