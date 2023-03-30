@@ -1,6 +1,7 @@
 package model.items;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // Block class contains information about the blocks used in early game for creating other items
 public class Block implements Item {
@@ -23,5 +24,22 @@ public class Block implements Item {
     // EFFECTS: returns this as JSON object
     public ArrayList<Item> getRequiredItems() {
         return requiredItems;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Block block = (Block) o;
+        return Objects.equals(name, block.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

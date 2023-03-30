@@ -68,12 +68,8 @@ public class Inventory implements Writable {
         boolean temp = false;
         if (number >= numberOfItems.get(idx)) {
             removeItemBunch(item);
-            temp = true;
         } else {
             numberOfItems.set(idx, numberOfItems.get(idx) - number);
-        }
-        if (temp) {
-            setCurrentItemDefault();
         }
     }
 

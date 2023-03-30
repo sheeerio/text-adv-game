@@ -15,7 +15,8 @@ import java.awt.event.*;
 
 import static ui.Game.*;
 
-public class Test {
+// InventoryWindow contains information about the inventory drag and drop system.
+public class InventoryWindow {
     private Inventory inv;
     private JFrame frame;
     private JTextArea recipeTextArea;
@@ -23,11 +24,8 @@ public class Test {
     private JPanel recipePanel;
 
 
-    public static void main(String[] args) {
-        new Test(new Inventory(), 300, 300);
-    }
-
-    public Test(Inventory inv, int x, int y) {
+    // EFFECTS: constructs a new inventory window containing a new frame
+    public InventoryWindow(Inventory inv, int x, int y) {
 
         this.inv = inv;
         EventQueue.invokeLater(new Runnable() {
@@ -35,7 +33,8 @@ public class Test {
             public void run() {
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                         | UnsupportedLookAndFeelException ex) {
                     ex.printStackTrace();
                 }
 
@@ -51,8 +50,10 @@ public class Test {
         });
     }
 
+    // TestPane class contains information about the main panel of the InventoryWindow window.
     public class TestPane extends JPanel {
 
+        // EFFECTS: constructs a JPanel and initializes four panels inside it
         public TestPane() {
             setLayout(new GridLayout(2, 2));
             setSize(300,300);
@@ -64,6 +65,8 @@ public class Test {
             add(createBottomRightPanel());
         }
 
+        // MODIFIES: this
+        // EFFECTS: constructs a new panel and adds the inventory items as buttons
         protected JPanel createLeftPanel() {
             JPanel panel = new JPanel(new GridBagLayout());
             panel.setBackground(Color.black);
@@ -71,7 +74,6 @@ public class Test {
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.weightx = 1;
             for (int index = 0; index < inv.getItems().size(); index++) {
                 JButton btn = new JButton(inv.getItemNames().get(index) + " ("
                         + inv.getNumberOfItems().get(index) + ")\n");
@@ -86,22 +88,13 @@ public class Test {
                     }
                 });
                 panel.add(btn, gbc);
-                btn.setTransferHandler(new ValueExportTransferHandler(inv.getItemNames().get(index) + " ("
-                        + inv.getNumberOfItems().get(index)+ ")\n"));
-
-                btn.addMouseMotionListener(new MouseAdapter() {
-                    @Override
-                    public void mouseDragged(MouseEvent e) {
-                        JButton button = (JButton) e.getSource();
-                        TransferHandler handle = button.getTransferHandler();
-                        handle.exportAsDrag(button, e, TransferHandler.COPY);
-                        getRecipe(button);
-                    }
-                });
+                InventoryWindow.this.extracted(index, btn);
             }
             return panel;
         }
 
+        // MODIFIES: this
+        // EFFECTS: creates a right panel that contains a label
         protected JPanel createRightPanel() {
             JPanel panel = new JPanel(new GridBagLayout());
             panel.setBackground(Color.black);
@@ -114,6 +107,8 @@ public class Test {
             return panel;
         }
 
+        // MODIFIES: this
+        // EFFECTS: creates a bottom left panel that contains a button
         protected JPanel createBottomLeftPanel() {
             JPanel panel = new JPanel(new GridBagLayout());
             panel.setBackground(Color.black);
@@ -130,19 +125,10 @@ public class Test {
             return panel;
         }
 
+        // MODIFIES: this
+        // EFFECTS: creates a bottom left panel that contains a recipe label and a button to create it
         protected JPanel createBottomRightPanel() {
-            recipePanel = new JPanel(new GridBagLayout());
-            recipePanel.setBackground(Color.black);
-            recipePanel.setForeground(Color.white);
-            recipeTextArea = new JTextArea("This is where the recipes will be!");
-            recipeTextArea.setBackground(Color.black);
-            recipeTextArea.setForeground(Color.white);
-            recipeTextArea.setLineWrap(true);
-            recipeButton = new JButton();
-            recipeButton.setBackground(Color.gray);
-            recipePanel.add(recipeTextArea);
-            recipeButton.setVisible(false);
-            recipePanel.add(recipeButton);
+            extracted();
             recipeButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -158,7 +144,7 @@ public class Test {
                     inv.removeNItems(sticks, 1);
                     inv.removeNItems(woodenPlank, 2);
                     frame.setVisible(false);
-                    new Test(inv, getWidth(), getHeight());
+                    new InventoryWindow(inv, getWidth(), getHeight());
                 }
             });
             return recipePanel;
@@ -166,11 +152,45 @@ public class Test {
 
     }
 
+    private void extracted(int index, JButton btn) {
+        btn.setTransferHandler(new ValueExportTransferHandler(inv.getItemNames().get(index) + " ("
+                + inv.getNumberOfItems().get(index) + ")\n"));
+
+        btn.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                JButton button = (JButton) e.getSource();
+                TransferHandler handle = button.getTransferHandler();
+                handle.exportAsDrag(button, e, TransferHandler.COPY);
+                getRecipe(button);
+            }
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates recipe panel for the window
+    private void extracted() {
+        recipePanel = new JPanel(new GridBagLayout());
+        recipePanel.setBackground(Color.black);
+        recipePanel.setForeground(Color.white);
+        recipeTextArea = new JTextArea("This is where the recipes will be!");
+        recipeTextArea.setBackground(Color.black);
+        recipeTextArea.setForeground(Color.white);
+        recipeTextArea.setLineWrap(true);
+        recipeButton = new JButton();
+        recipeButton.setBackground(Color.gray);
+        recipePanel.add(recipeTextArea);
+        recipeButton.setVisible(false);
+        recipePanel.add(recipeButton);
+    }
+
+    // ValueExportTransferHandler contains information about data exporting in the Drag and Drop system
     public static class ValueExportTransferHandler extends TransferHandler {
 
         public static final DataFlavor SUPPORTED_DATE_FLAVOR = DataFlavor.stringFlavor;
         private String value;
 
+        // constructs and assigns the given value as the main value for the class
         public ValueExportTransferHandler(String value) {
             this.value = value;
         }
@@ -184,12 +204,15 @@ public class Test {
             return DnDConstants.ACTION_COPY_OR_MOVE;
         }
 
+        // EFFECTS: prepares data to be transferable
         @Override
         protected Transferable createTransferable(JComponent c) {
             Transferable t = new StringSelection(getValue());
             return t;
         }
 
+        // MODIFIES: source list
+        // EFFECTS: clears items from source when move operation is performed
         @Override
         protected void exportDone(JComponent source, Transferable data, int action) {
             super.exportDone(source, data, action);
@@ -198,6 +221,7 @@ public class Test {
 
     }
 
+    // ValueImportTranferHandler contains information about the data importing
     public static class ValueImportTransferHandler extends TransferHandler {
 
         public static final DataFlavor SUPPORTED_DATE_FLAVOR = DataFlavor.stringFlavor;
@@ -233,13 +257,13 @@ public class Test {
     }
 
     public void getRecipe(JButton button) {
-        if (button.getText().contains("Wooden Planks") &&
-                inv.getNumberOfItems().get(inv.getItemNames().indexOf("Wooden Planks")) >= 2) {
+        if (button.getText().contains("Wooden Planks")
+                && inv.getNumberOfItems().get(inv.getItemNames().indexOf("Wooden Planks")) >= 2) {
             recipeTextArea.setText("Do you want to create sticks?");
             recipeButton.setText("Create Sticks");
             recipeButton.setVisible(true);
-        } else if (button.getText().contains("Sticks") && inv.getItemNames().contains("Wooden Planks") &&
-        inv.getNumberOfItems().get(inv.getItemNames().indexOf("Wooden Planks")) >= 2) {
+        } else if (button.getText().contains("Sticks") && inv.getItemNames().contains("Wooden Planks")
+                && inv.getNumberOfItems().get(inv.getItemNames().indexOf("Wooden Planks")) >= 2) {
             recipeTextArea.setText("Do you want to create a wooden sword?");
             recipeButton.setText("Create Wooden Sword");
             recipeButton.setVisible(true);

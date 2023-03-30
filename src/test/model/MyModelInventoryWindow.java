@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MyModelTest {
+class MyModelInventoryWindow {
 
     Block wood;
     Block woodenPlank;

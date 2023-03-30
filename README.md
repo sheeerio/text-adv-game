@@ -79,3 +79,15 @@ contribute to its resurgence in popularity.
 - As a user, I want to be able to change the sound option (mute/sound on)
 - As a user, I want to be able to view buttons I cannot click due to lack of experience or items
 - As a user, I want to be able to load my previous game progress
+
+## Instructions for grader
+- To generate the action of adding X's (wood) to a Y (inventory) select the to "Leave" the talk with the guard and then
+ select "Go north" and then "Chop wood".
+- To view the added X (wood or wooden Plank), click "Open inventory" which opens a new window to showcase the current
+ inventory.
+- To perform the action of selecting the current item, click on one of the items and then click done.
+- The current item is displayed on the player panel.
+- You can save the state of the inventory by clicking on the "save" button on the top right-hand side of the player
+ panel.
+- You can reload the state of the inventory by clicking "Load game" at the start menu
+- The visual component of my application is the background of the game
