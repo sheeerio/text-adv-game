@@ -35,7 +35,7 @@ public class EventLog implements Iterable<Event> {
             theLog = new EventLog();
         }
 
-        returin theLog;
+        return theLog;
     }
 
     /**
