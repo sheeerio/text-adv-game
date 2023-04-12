@@ -1,0 +1,28 @@
+{"MOMOS": [
+    {"items": [
+        {
+            "number": 2,
+            "name": "Wooden Planks"
+        },
+        {
+            "number": 2,
+            "name": "Sticks"
+        },
+        {
+            "number": 1,
+            "name": "Wooden Sword"
+        },
+        {
+            "number": 1,
+            "name": "Gold"
+        },
+        {
+            "number": 7,
+            "name": "Raw Meat"
+        }
+    ]},
+    {"stats": {
+        "hp": 94,
+        "username": "Enter Username"
+    }}
+]}
