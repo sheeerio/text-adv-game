@@ -96,6 +96,8 @@ contribute to its resurgence in popularity.
 
 An example of what the logs look like at the end of the program is given below.
 
+**Note**: this is only an excerpt from the complete log list.
+
 `Wed Apr 12 16:28:24 PDT 2023
 Added item: Raw Meat to inventory.`
 
