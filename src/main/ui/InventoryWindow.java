@@ -221,7 +221,7 @@ public class InventoryWindow {
 
     }
 
-    // ValueImportTranferHandler contains information about the data importing
+    // ValueImportTransferHandler contains information about the data importing
     public static class ValueImportTransferHandler extends TransferHandler {
 
         public static final DataFlavor SUPPORTED_DATE_FLAVOR = DataFlavor.stringFlavor;
@@ -256,6 +256,8 @@ public class InventoryWindow {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS:
     public void getRecipe(JButton button) {
         if (button.getText().contains("Wooden Planks")
                 && inv.getNumberOfItems().get(inv.getItemNames().indexOf("Wooden Planks")) >= 2) {

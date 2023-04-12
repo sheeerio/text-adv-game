@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Inventory;
 import model.Mob;
 import model.Player;
@@ -12,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,7 +23,7 @@ import java.util.*;
 
 
 // Game represents information about the UI of game, including printing and scanning.
-public class Game {
+public class Game implements LogPrinter {
 
     JFrame window;
     Container con;
@@ -93,6 +96,7 @@ public class Game {
 
     // Initialize player
     static Player player;
+    static boolean win = false;
 
     // Intialize scanner
     static Scanner in = new Scanner(System.in);
@@ -192,7 +196,9 @@ public class Game {
             try {
                 inventory = jsonReader.read();
                 System.out.println("Loaded inventory from " + JSON_STORE);
-                printInventory();
+                if (inventory.getItems().contains(gold)) {
+                    win = true;
+                }
             } catch (IOException e) {
                 System.out.println("Unable to read from file: " + JSON_STORE);
             }
@@ -492,7 +498,6 @@ public class Game {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                printInventory();
                 player = new Player(usernameTextField.getText(), 100);
             }
         });
@@ -512,7 +517,7 @@ public class Game {
                 try {
                     inventory = jsonReader.read();
                     usernameTextField.setText("Loaded game from " + JSON_STORE);
-                    printInventory();
+                    win = true;
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -555,11 +560,11 @@ public class Game {
     private void extracted() {
         startFieldPanel = new JPanel();
         startFieldPanel.setBounds(200, 240, 400, 40);
-        startFieldPanel.setBackground(new Color(0,0,0,125));
+        startFieldPanel.setBackground(new Color(0, 0, 0,125));
         startFieldPanel.setForeground(Color.white);
 
         usernameTextLabel = new JLabel();
-        usernameTextField = new JTextField("Enter Username, e.g. PussyDestroyer69", 40);
+        usernameTextField = new JTextField("Enter Username", 40);
         startFieldPanel.setLayout(new GridLayout(1, 2));
         startFieldPanel.add(usernameTextField);
 
@@ -875,6 +880,7 @@ public class Game {
                 case "whyNotOkay":
                 case "trueTrue":
                 case "okay":
+                case "attackGuard":
                     switch (yourChoice) {
                         case "c1":
                             villageGate();
@@ -891,7 +897,11 @@ public class Game {
                 case "villageGate":
                     switch (yourChoice) {
                         case "c1":
-                            talkGuard();
+                            if (win) {
+                                ending();
+                            } else {
+                                talkGuard();
+                            }
                             break;
                         case "c2":
                             attackGuard();
@@ -906,11 +916,7 @@ public class Game {
                 case "talkGuard":
                     switch (yourChoice) {
                         case "c1":
-                            if (inventory.getItems().contains(gold)) {
-                                ending();
-                            } else {
-                                villageGate();
-                            }
+                            villageGate();
                             break;
                         case "c2":
                             whyNot();
@@ -923,17 +929,6 @@ public class Game {
                             break;
                     }
                     break;
-                case "attackGuard":
-                    switch (yourChoice) {
-                        case "c1":
-                            if (inventory.getItems().contains(gold)) {
-                                ending();
-                            } else {
-                                villageGate();
-                            }
-                            break;
-                    }
-                    break;
                 case "crossRoad":
                     switch (yourChoice) {
                         case "c1":
@@ -943,10 +938,10 @@ public class Game {
                             east();
                             break;
                         case "c3":
-                            south();
+                            villageGate();
                             break;
                         case "c4":
-                            fight();
+                            south();
                             break;
                     }
                     break;
@@ -1101,7 +1096,6 @@ public class Game {
         choice2.setText("");
         choice3.setText("Go back");
         choice4.setText("Open inventory");
-        printInventory();
     }
 
     // MODIFIES: this
@@ -1226,7 +1220,7 @@ public class Game {
     public void win() {
         position = "win";
         Random rand = new Random();
-        int next = rand.nextInt(10);
+        int next = rand.nextInt(5);
         if (next != 4) {
             int dropped = rand.nextInt(3);
             mainTextArea.setText("<HTML>You defeated the " + enemy.getName() + "!<BR><BR>"
@@ -1238,8 +1232,9 @@ public class Game {
             mainTextArea.setText("<HTML>You defeated the " + enemy.getName() + "!<BR><BR>"
                     + "The " + enemy.getName() + " dropped a gold ingot!</HTML>");
             inventory.addItem(gold);
+            win = true;
         }
-        choice1.setText("Go north");
+        choice1.setText("Go east");
 
     }
 
@@ -1268,8 +1263,10 @@ public class Game {
         if (inventory.count(rawMeat) > 0) {
             if (Player.getHealth() < 90) {
                 Player.setHealth(Player.getHealth() + 10);
+                hpLabel.setText("HP: " + Player.getHealth());
             } else {
                 Player.setHealth(100);
+                hpLabel.setText("HP: 100");
             }
             inventory.removeNItems(rawMeat, 1);
             if (inventory.getItemNames().contains("Raw Meat")) {
@@ -1301,6 +1298,17 @@ public class Game {
         choice2.setVisible(false);
         choice3.setVisible(false);
         choice4.setVisible(false);
+        printLog(EventLog.getInstance());
+        window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
+
+    }
+
+    // EFFECTS: prints logs to the console
+    @Override
+    public void printLog(EventLog events) {
+        for (Event e : events) {
+            System.out.println(e.toString() + "\n");
+        }
     }
 
 }

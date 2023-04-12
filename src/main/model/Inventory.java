@@ -32,7 +32,9 @@ public class Inventory implements Writable {
     // and appends 1 to the number list if item not already in inv.
     // otherwise adds 1 to the number of the item.
     // Sets current item to be last item added
+    // Adds changes to the log
     public void addItem(Item item) {
+        EventLog.getInstance().logEvent(new Event("Added item: " + item.getName() + " to inventory."));
         String tempName = item.getName();
         if (items.contains(item)) {
             int idx = itemNames.indexOf(tempName);
@@ -63,7 +65,10 @@ public class Inventory implements Writable {
     // EFFECTS: if number < item number, subtracts number
     // from item number in item number list
     // else removes item bunch from lists
+    // Adds changes to the log
     public void removeNItems(Item item, Integer number) {
+        EventLog.getInstance().logEvent(new Event("Removed " + number + "item: "
+                + item.getName() + " to inventory."));
         int idx = itemNames.indexOf(item.getName());
         boolean temp = false;
         if (number >= numberOfItems.get(idx)) {
@@ -85,9 +90,12 @@ public class Inventory implements Writable {
     }
 
     // REQUIRES: index must be in range of itemNames.size()
-    // MODIFES: this
+    // MODIFIES: this
     // EFFECTS: sets current item to item at index in list
+    // Adds changes to the log
     public void setCurrentItemTo(int idx) {
+        EventLog.getInstance().logEvent(new Event("Set current item to: " + getItemNames().get(idx)
+                + " to inventory."));
         currentItem = itemNames.get(idx);
     }
 
@@ -95,7 +103,7 @@ public class Inventory implements Writable {
     // EFFECTS: sets current item to item at last index in list
     public void setCurrentItemDefault() {
         if (!items.isEmpty()) {
-            currentItem = itemNames.get(itemNames.size() - 1);
+            setCurrentItemTo((itemNames.size() - 1));
         } else {
             currentItem = null;
         }
