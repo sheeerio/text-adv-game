@@ -91,3 +91,47 @@ contribute to its resurgence in popularity.
  panel.
 - You can reload the state of the inventory by clicking "Load game" at the start menu
 - The visual component of my application is the background of the game
+
+## Phase 4: Task 2
+
+An example of what the logs look like at the end of the program is given below.
+
+`Wed Apr 12 16:28:24 PDT 2023
+Added item: Raw Meat to inventory.`
+
+`Wed Apr 12 16:28:24 PDT 2023
+Removed 1 item(s): Raw Meat from inventory.`
+
+`Wed Apr 12 16:28:34 PDT 2023
+Set current item to: Wooden Planks.`
+
+`Wed Apr 12 16:28:55 PDT 2023
+Set current item to: Wooden Sword.`
+
+`Wed Apr 12 16:28:56 PDT 2023
+Added item: Wooden Planks to inventory.`
+
+`Wed Apr 12 16:29:15 PDT 2023
+Set current item to: Wooden Sword.`
+
+`Wed Apr 12 16:30:01 PDT 2023
+Added item: Gold to inventory.`
+
+`Wed Apr 12 16:30:01 PDT 2023
+Set current item to: Gold.`
+`
+
+## Phase 4: Task 3
+
+![uml](data/uml.png)
+*UML diagram*
+
+Given the resources, I would implement the following ideas into my code:
+- Refactoring the GUI into smaller, more cohesive classes helps to increase maintainability and extendability by
+  separating responsibilities and making modifications to one class independent of the rest.
+
+- Creating more methods with a single responsibility and purpose to help increase the readability and maintainability
+  of the code.
+
+- Using more abstract classes and interfaces to reduce repeated code and provide a common structure for multiple
+  classes to implement, resulting in more efficient and modular code.

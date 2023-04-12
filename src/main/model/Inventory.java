@@ -66,8 +66,8 @@ public class Inventory implements Writable {
     // else removes item bunch from lists
     // Adds changes to the log
     public void removeNItems(Item item, Integer number) {
-        EventLog.getInstance().logEvent(new Event("Removed " + number + "item: "
-                + item.getName() + " to inventory."));
+        EventLog.getInstance().logEvent(new Event("Removed " + number + " item(s): "
+                + item.getName() + " from inventory."));
         int idx = itemNames.indexOf(item.getName());
         boolean temp = false;
         if (number >= numberOfItems.get(idx)) {
@@ -93,8 +93,7 @@ public class Inventory implements Writable {
     // EFFECTS: sets current item to item at index in list
     // Adds changes to the log
     public void setCurrentItemTo(int idx) {
-        EventLog.getInstance().logEvent(new Event("Set current item to: " + getItemNames().get(idx)
-                + " to inventory."));
+        EventLog.getInstance().logEvent(new Event("Set current item to: " + getItemNames().get(idx)));
         currentItem = itemNames.get(idx);
     }
 
