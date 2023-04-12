@@ -17,7 +17,6 @@ public class Inventory implements Writable {
     ArrayList<String> itemNames;
     ArrayList<Integer> numberOfItems;
 
-    // Initialization of all blocks
 
     // EFFECTS: creates an empty inventory
     public Inventory() {

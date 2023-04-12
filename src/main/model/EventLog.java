@@ -20,6 +20,7 @@ public class EventLog implements Iterable<Event> {
      * Prevent external construction.
      * (Singleton Design Pattern).
      */
+    // EFFECTS: Prevent external construction.
     private EventLog() {
         events = new ArrayList<Event>();
     }

@@ -36,6 +36,7 @@ public class Event {
     }
 
     @Override
+    // EFFECTS: changes the equals settings for the event class
     public boolean equals(Object other) {
         if (other == null) {
             return false;
@@ -52,6 +53,7 @@ public class Event {
     }
 
     @Override
+    // EFFECTS: changes the hashcode settings for the event class
     public int hashCode() {
         return (HASH_CONSTANT * dateLogged.hashCode() + description.hashCode());
     }
