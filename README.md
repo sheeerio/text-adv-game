@@ -98,30 +98,31 @@ An example of what the logs look like at the end of the program is given below.
 
 **Note**: this is only an excerpt from the complete log list.
 
-`Wed Apr 12 16:28:24 PDT 2023
-Added item: Raw Meat to inventory.`
+```
+Wed Apr 12 16:28:24 PDT 2023
+Added item: Raw Meat to inventory.
 
-`Wed Apr 12 16:28:24 PDT 2023
-Removed 1 item(s): Raw Meat from inventory.`
+Wed Apr 12 16:28:24 PDT 2023
+Removed 1 item(s): Raw Meat from inventory.
 
-`Wed Apr 12 16:28:34 PDT 2023
-Set current item to: Wooden Planks.`
+Wed Apr 12 16:28:34 PDT 2023
+Set current item to: Wooden Planks.
 
-`Wed Apr 12 16:28:55 PDT 2023
-Set current item to: Wooden Sword.`
+Wed Apr 12 16:28:55 PDT 2023
+Set current item to: Wooden Sword.
 
-`Wed Apr 12 16:28:56 PDT 2023
-Added item: Wooden Planks to inventory.`
+Wed Apr 12 16:28:56 PDT 2023
+Added item: Wooden Planks to inventory.
 
-`Wed Apr 12 16:29:15 PDT 2023
-Set current item to: Wooden Sword.`
+Wed Apr 12 16:29:15 PDT 2023
+Set current item to: Wooden Sword.
 
-`Wed Apr 12 16:30:01 PDT 2023
-Added item: Gold to inventory.`
+Wed Apr 12 16:30:01 PDT 2023
+Added item: Gold to inventory.
 
-`Wed Apr 12 16:30:01 PDT 2023
-Set current item to: Gold.`
-`
+Wed Apr 12 16:30:01 PDT 2023
+Set current item to: Gold.
+```
 
 ## Phase 4: Task 3
 
